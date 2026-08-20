@@ -21,6 +21,17 @@
     </script>
 
           <style>
+      /* Mobile browsers resize their address bar without updating 100vh, so
+         the bottom-anchored nav bar can end up below the visible fold until
+         the user scrolls. 100dvh tracks the actually-visible viewport. */
+      @supports (height: 100dvh) {
+        div[style*="height: 100vh"] {
+          height: 100dvh !important;
+        }
+        div[style*="height: calc(100vh - 220px)"] {
+          height: calc(100dvh - 220px) !important;
+        }
+      }
 @font-face {
         font-family: "Terrarum Sans Bitmap";
         src: url("./fonts/TerrarumSansBitmap.otf") format("opentype");
