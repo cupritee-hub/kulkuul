@@ -1980,7 +1980,7 @@ Error generating stack: `+e.message+`
     };
     const applyFont = value => {
       const fontFamilies = { bitmap: "Terrarum Sans Bitmap, monospace", dossaemmul: "DOSSaemmul Sokuri, monospace", umdot: "Umdot Sokuri, monospace", mona: "Mona Sokuri, monospace" };
-      const font = fontFamilies[value] ? value : "dossaemmul";
+      const font = fontFamilies[value] ? value : "mona";
       document.documentElement.dataset.sokuriFont = font;
       localStorage.setItem(FONT_KEY, font);
       document.querySelectorAll("[data-sokuri-font-choice]").forEach(button => {
@@ -2773,7 +2773,7 @@ Error generating stack: `+e.message+`
           row.dataset.sokuriFontReady = "true";
           row.replaceChildren();
 
-          [["비트맵", "bitmap"], ["DOS샘물", "dossaemmul"], ["Umdot", "umdot"], ["Mona", "mona"]].forEach(([text, value]) => {
+          [["Mona", "mona"], ["비트맵", "bitmap"], ["DOS샘물", "dossaemmul"], ["Umdot", "umdot"]].forEach(([text, value]) => {
             const button = document.createElement("button");
             button.type = "button";
             button.textContent = text;
