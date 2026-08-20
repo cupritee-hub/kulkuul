@@ -7,7 +7,9 @@
 <style>
   @font-face {
     font-family: "KoPub Dotum";
-    src: url("./fonts/KoPubWorld-Dotum-Medium.otf") format("opentype");
+    src:
+      url("./fonts/KoPubWorld-Dotum-Medium.woff2") format("woff2"),
+      url("./fonts/KoPubWorld-Dotum-Medium.otf") format("opentype");
     font-weight: 500;
     font-display: swap;
   }
@@ -67,10 +69,9 @@
     display: none;
     flex-direction: column;
     background: var(--panel-bg);
-    border: 2px solid var(--panel-border);
+    border: 2px solid #0000ff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     z-index: 10;
   }
   .sokuri-menu.open { display: flex; }
