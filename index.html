@@ -5,12 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>쿨쿨홈</title>
 <style>
+  @font-face {
+    font-family: "KoPub Dotum";
+    src: url("./fonts/KoPubWorld-Dotum-Medium.otf") format("opentype");
+    font-weight: 500;
+    font-display: swap;
+  }
   :root {
     color-scheme: light dark;
     --bg: #ffffff;
+    --panel-bg: #ffffff;
+    --panel-text: #111111;
+    --panel-border: #111111;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #000000; }
+    :root {
+      --bg: #000000;
+      --panel-bg: #1c1c1c;
+      --panel-text: #ffffff;
+      --panel-border: #ffffff;
+    }
   }
   html, body {
     margin: 0;
@@ -22,6 +36,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: "KoPub Dotum", sans-serif;
+  }
+  .frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .home-image {
     width: 100%;
@@ -29,10 +52,110 @@
     max-width: 100vw;
     max-height: 100vh;
     object-fit: contain;
+    display: block;
+  }
+  .sokuri-hotspot {
+    position: absolute;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  .sokuri-menu {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    background: var(--panel-bg);
+    border: 2px solid var(--panel-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+  }
+  .sokuri-menu.open { display: flex; }
+  .sokuri-menu a {
+    display: block;
+    padding: 12px 20px;
+    color: var(--panel-text);
+    text-decoration: none;
+    font-family: "KoPub Dotum", sans-serif;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .sokuri-menu a:not(:last-child) {
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .sokuri-menu a:hover {
+    background: rgba(128, 128, 128, 0.15);
   }
 </style>
 </head>
 <body>
-  <img class="home-image" src="./kulkuulhome.png" alt="쿨쿨홈" />
+  <div class="frame">
+    <img class="home-image" id="homeImage" src="./kulkuulhome.png" alt="쿨쿨홈" />
+    <button class="sokuri-hotspot" id="sokuriHotspot" aria-label="소쿠리"></button>
+    <div class="sokuri-menu" id="sokuriMenu">
+      <a href="/sokuri">소쿠리 단어장</a>
+      <a href="/sokuri-demo">소쿠리 단어장 (데모)</a>
+    </div>
+  </div>
+
+  <script>
+    // Envelope icon bounding box, as a fraction of the source image (1080x1920).
+    const HOTSPOT = { left: 0.7759, top: 0.4927, right: 0.9685, bottom: 0.5766 };
+
+    const img = document.getElementById("homeImage");
+    const hotspot = document.getElementById("sokuriHotspot");
+    const menu = document.getElementById("sokuriMenu");
+
+    function layout() {
+      const containerRect = img.parentElement.getBoundingClientRect();
+      const naturalW = img.naturalWidth;
+      const naturalH = img.naturalHeight;
+      if (!naturalW || !naturalH) return;
+
+      const scale = Math.min(containerRect.width / naturalW, containerRect.height / naturalH);
+      const renderedW = naturalW * scale;
+      const renderedH = naturalH * scale;
+      const offsetX = (containerRect.width - renderedW) / 2;
+      const offsetY = (containerRect.height - renderedH) / 2;
+
+      const hx = offsetX + HOTSPOT.left * renderedW;
+      const hy = offsetY + HOTSPOT.top * renderedH;
+      const hw = (HOTSPOT.right - HOTSPOT.left) * renderedW;
+      const hh = (HOTSPOT.bottom - HOTSPOT.top) * renderedH;
+
+      hotspot.style.left = hx + "px";
+      hotspot.style.top = hy + "px";
+      hotspot.style.width = hw + "px";
+      hotspot.style.height = hh + "px";
+
+      menu.style.top = hy + hh + 6 + "px";
+      const margin = 8;
+      const menuWidth = menu.offsetWidth;
+      let menuLeft = hx;
+      if (menuLeft + menuWidth > containerRect.width - margin) {
+        menuLeft = hx + hw - menuWidth;
+      }
+      if (menuLeft < margin) menuLeft = margin;
+      menu.style.left = menuLeft + "px";
+    }
+
+    if (img.complete) layout();
+    img.addEventListener("load", layout);
+    window.addEventListener("resize", layout);
+
+    hotspot.addEventListener("click", event => {
+      event.stopPropagation();
+      menu.classList.toggle("open");
+      layout();
+    });
+    document.addEventListener("click", event => {
+      if (!menu.contains(event.target) && event.target !== hotspot) {
+        menu.classList.remove("open");
+      }
+    });
+  </script>
 </body>
 </html>
