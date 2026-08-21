@@ -20,10 +20,11 @@
         });
       }
       // If this app is running as an installed standalone window (not a
-      // normal browser tab), size that window to a 3:4 ratio.
+      // normal browser tab), size that window to a compact fixed width
+      // with a 3:4 ratio, instead of scaling up on tall screens.
       if (window.matchMedia("(display-mode: standalone)").matches && window.resizeTo) {
-        const height = Math.round(Math.min(window.screen.availHeight * 0.9, 900));
-        const width = Math.round(height * (3 / 4));
+        const width = 420;
+        const height = Math.round(Math.min(width * (4 / 3), window.screen.availHeight * 0.9));
         try {
           window.resizeTo(width, height);
         } catch {}
