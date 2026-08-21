@@ -2930,6 +2930,74 @@ Error generating stack: `+e.message+`
 
 
 
+<style id="SOKURI_ICON_IMAGE_SYSTEM_CSS_FAST">
+/* Pure-CSS icons for buttons React labels with a fixed title/aria-label.
+   These render on the very first paint straight from React's own output,
+   with no JS pass needed - so they never blank-then-pop-in on a tab
+   switch the way the JS-injected icon system below can on a slow device.
+   Whatever the JS system still adds on top of these gets hidden by the
+   ">*{display:none}" rule, so the two systems don't double-render. */
+button[title="복사"],
+button[title="편집"], button[title="메모 편집"], button[title="발췌 편집"],
+button[title="삭제"],
+button[title="하트 켜기"],
+button[title="하트 끄기"],
+button.sokuri-excerpt-link, button[title*="발췌 연결"], button[title*="연결된 메모"], button[aria-label*="연결된 메모"],
+button[title="단어"], button[aria-label="단어"],
+button[title="줄거리"], button[aria-label="줄거리"],
+button[title="발췌"], button[aria-label="발췌"],
+button[title="쪽지"], button[aria-label="쪽지"],
+button[title="메모"], button[aria-label="메모"] {
+  color: transparent !important;
+  background-image: none !important;
+  position: relative !important;
+  padding: 0 !important;
+}
+button[title="복사"] > *,
+button[title="편집"] > *, button[title="메모 편집"] > *, button[title="발췌 편집"] > *,
+button[title="삭제"] > *,
+button[title="하트 켜기"] > *,
+button[title="하트 끄기"] > *,
+button.sokuri-excerpt-link > *, button[title*="발췌 연결"] > *, button[title*="연결된 메모"] > *, button[aria-label*="연결된 메모"] > *,
+button[title="단어"] > *, button[aria-label="단어"] > *,
+button[title="발췌"] > *, button[aria-label="발췌"] > *,
+button[title="쪽지"] > *, button[aria-label="쪽지"] > *,
+button[title="메모"] > *, button[aria-label="메모"] > * {
+  display: none !important;
+}
+button[title="복사"]::before,
+button[title="편집"]::before, button[title="메모 편집"]::before, button[title="발췌 편집"]::before,
+button[title="삭제"]::before,
+button[title="하트 켜기"]::before,
+button[title="하트 끄기"]::before,
+button.sokuri-excerpt-link::before, button[title*="발췌 연결"]::before, button[title*="연결된 메모"]::before, button[aria-label*="연결된 메모"]::before,
+button[title="단어"]::before, button[aria-label="단어"]::before,
+button[title="발췌"]::before, button[aria-label="발췌"]::before,
+button[title="쪽지"]::before, button[aria-label="쪽지"]::before,
+button[title="메모"]::before, button[aria-label="메모"]::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: var(--sokuri-icon-size, 22px) !important;
+  aspect-ratio: 3/4 !important;
+  background-color: var(--px-ink) !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+}
+button[title="복사"]::before { -webkit-mask-image: url('./icon-assets/copy.png') !important; mask-image: url('./icon-assets/copy.png') !important; }
+button[title="편집"]::before, button[title="메모 편집"]::before, button[title="발췌 편집"]::before { -webkit-mask-image: url('./icon-assets/edit.png') !important; mask-image: url('./icon-assets/edit.png') !important; }
+button[title="삭제"]::before { -webkit-mask-image: url('./icon-assets/delete.png') !important; mask-image: url('./icon-assets/delete.png') !important; }
+button[title="하트 켜기"]::before { -webkit-mask-image: url('./icon-assets/heart-empty.png') !important; mask-image: url('./icon-assets/heart-empty.png') !important; }
+button[title="하트 끄기"]::before { -webkit-mask-image: url('./icon-assets/heart-full.png') !important; mask-image: url('./icon-assets/heart-full.png') !important; }
+button.sokuri-excerpt-link::before, button[title*="발췌 연결"]::before, button[title*="연결된 메모"]::before, button[aria-label*="연결된 메모"]::before { -webkit-mask-image: url('./icon-assets/link.png') !important; mask-image: url('./icon-assets/link.png') !important; }
+button[title="단어"]::before, button[aria-label="단어"]::before, button[title="줄거리"]::before, button[aria-label="줄거리"]::before { -webkit-mask-image: url('./icon-assets/words.png') !important; mask-image: url('./icon-assets/words.png') !important; }
+button[title="발췌"]::before, button[aria-label="발췌"]::before { -webkit-mask-image: url('./icon-assets/excerpt.png') !important; mask-image: url('./icon-assets/excerpt.png') !important; }
+button[title="쪽지"]::before, button[aria-label="쪽지"]::before { -webkit-mask-image: url('./icon-assets/note.png') !important; mask-image: url('./icon-assets/note.png') !important; }
+button[title="메모"]::before, button[aria-label="메모"]::before { -webkit-mask-image: url('./icon-assets/memo.png') !important; mask-image: url('./icon-assets/memo.png') !important; }
+</style>
 <style id="SOKURI_ICON_IMAGE_SYSTEM">
 :root{--sokuri-icon-size:22px}
 button.sokuri-icon-image{position:relative!important;color:transparent!important;background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important;padding:0!important}
@@ -2949,8 +3017,8 @@ var T={copy:'\uBCF5\uC0AC',edit:'\uD3B8\uC9D1',medit:'\uBA54\uBAA8 \uD3B8\uC9D1'
 function icon(b,k){if(!b||!U[k])return;b.style.removeProperty('visibility');var existing=b.querySelector(':scope > .sokuri-icon-box');if(b.getAttribute('data-sokuri-image')===k&&existing)return;b.setAttribute('data-sokuri-image',k);b.classList.add('sokuri-icon-image');var url="url('"+U[k]+"')";if(existing){existing.setAttribute('data-icon-slot',k);existing.style.webkitMaskImage=url;existing.style.maskImage=url;return}var box=document.createElement('span');box.className='sokuri-icon-box';box.setAttribute('data-icon-slot',k);box.setAttribute('aria-hidden','true');box.style.webkitMaskImage=url;box.style.maskImage=url;b.appendChild(box)}
 function run(){
  var bs=[].slice.call(document.querySelectorAll('button'));
- bs.forEach(function(b){var t=(b.title||'').trim(),a=(b.getAttribute('aria-label')||t).trim();if(t===T.copy)return icon(b,'copy');if(t===T.edit||t===T.medit||t===T.eedit)return icon(b,'edit');if(t===T.del)return icon(b,'del');if(t===T.on)return icon(b,'empty');if(t===T.off)return icon(b,'full');if(b.classList.contains('sokuri-excerpt-link')||t===T.linked||t.indexOf('발췌 연결')>-1||t.indexOf('연결된 메모')>-1||a.indexOf('연결된 메모')>-1)return icon(b,'link');if(t===T.none){b.removeAttribute('data-sokuri-image');b.classList.remove('sokuri-icon-image');var mine=b.querySelector(':scope > .sokuri-icon-box');if(mine)mine.remove();b.style.visibility='hidden';return}if(a===T.word||t===T.word)return icon(b,'words');if(a===T.quote||t===T.quote)return icon(b,'excerpt');if(a===T.note||t===T.note)return icon(b,'note');if(a===T.memo||t===T.memo)return icon(b,'memo');if(a===T.plot||t===T.plot)return icon(b,'plot')});
- var inner=[].slice.call(document.querySelectorAll('button[data-sokuri-nav="inner"]')),ik=inner.length===3?['words','excerpt','memo']:['words','excerpt','note','memo'];inner.forEach(function(b,i){var t=(b.title||b.getAttribute('aria-label')||'').trim();if(t===T.word)return icon(b,'words');if(t===T.quote)return icon(b,'excerpt');if(t===T.note)return icon(b,'note');if(t===T.memo)return icon(b,'memo');if(!t&&ik[i])icon(b,ik[i])});
+ bs.forEach(function(b){var t=(b.title||'').trim(),a=(b.getAttribute('aria-label')||t).trim();if(t===T.copy)return icon(b,'copy');if(t===T.edit||t===T.medit||t===T.eedit)return icon(b,'edit');if(t===T.del)return icon(b,'del');if(t===T.on)return icon(b,'empty');if(t===T.off)return icon(b,'full');if(b.classList.contains('sokuri-excerpt-link')||t===T.linked||t.indexOf('발췌 연결')>-1||t.indexOf('연결된 메모')>-1||a.indexOf('연결된 메모')>-1)return icon(b,'link');if(t===T.none){b.removeAttribute('data-sokuri-image');b.classList.remove('sokuri-icon-image');var mine=b.querySelector(':scope > .sokuri-icon-box');if(mine)mine.remove();b.style.visibility='hidden';return}if(a===T.word||t===T.word||a===T.plot||t===T.plot)return icon(b,'words');if(a===T.quote||t===T.quote)return icon(b,'excerpt');if(a===T.note||t===T.note)return icon(b,'note');if(a===T.memo||t===T.memo)return icon(b,'memo')});
+ var inner=[].slice.call(document.querySelectorAll('button[data-sokuri-nav="inner"]')),ik=inner.length===3?['words','excerpt','memo']:['words','excerpt','note','memo'];inner.forEach(function(b,i){var t=(b.title||b.getAttribute('aria-label')||'').trim();if(t===T.word||t===T.plot)return icon(b,'words');if(t===T.quote)return icon(b,'excerpt');if(t===T.note)return icon(b,'note');if(t===T.memo)return icon(b,'memo');if(!t&&ik[i])icon(b,ik[i])});
  var book=document.querySelector('button[title="\uCC45 \uBAA9\uB85D"]');if(book){icon(book,'book');var root=book.parentElement&&book.parentElement.parentElement&&book.parentElement.parentElement.parentElement;var top=root?[].slice.call(root.querySelectorAll('button')).filter(function(b){return !b.innerText.trim()&&!b.title}):[];if(top.length>=3){icon(top[0],'add');icon(top[1],'search');icon(top[2],'settings')}}
  [].slice.call(document.querySelectorAll('button.sokuri-excerpt-link')).forEach(function(b){icon(b,'link')});
  var bottom=[].slice.call(document.querySelectorAll('button[data-sokuri-nav="bottom"]'));if(bottom[0])icon(bottom[0],'search');if(bottom[1])icon(bottom[1],'words');if(bottom[2])icon(bottom[2],'memo');
