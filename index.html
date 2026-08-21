@@ -103,8 +103,8 @@
     <img class="home-image" id="homeImage" src="./kulkuulhome.png" alt="쿨쿨홈" />
     <button class="sokuri-hotspot" id="sokuriHotspot" aria-label="소쿠리"></button>
     <div class="sokuri-menu" id="sokuriMenu">
-      <a href="/sokuri" target="_blank" rel="noopener noreferrer">소쿠리 단어장</a>
-      <a href="/sokuri-demo" target="_blank" rel="noopener noreferrer">소쿠리 단어장 (데모)</a>
+      <a href="/sokuri" data-sokuri-popup="true">소쿠리 단어장</a>
+      <a href="/sokuri-demo" data-sokuri-popup="true">소쿠리 단어장 (데모)</a>
     </div>
   </div>
 
@@ -163,6 +163,32 @@
         menu.classList.remove("open");
       }
     });
+
+    // Open 소쿠리/데모 as a window sized to a 3:4 ratio instead of a plain tab.
+    document.querySelectorAll('a[data-sokuri-popup="true"]').forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        const height = Math.round(Math.min(window.screen.availHeight * 0.9, 900));
+        const width = Math.round(height * (3 / 4));
+        const left = Math.round((window.screen.availWidth - width) / 2);
+        const top = Math.round((window.screen.availHeight - height) / 2);
+        window.open(
+          link.href,
+          "_blank",
+          `width=${width},height=${height},left=${left},top=${top},noopener,noreferrer`
+        );
+      });
+    });
+
+    // If this page itself is running as an installed standalone window
+    // (not a normal browser tab), size that window to the 9:16 image ratio.
+    if (window.matchMedia("(display-mode: standalone)").matches && window.resizeTo) {
+      const height = Math.round(Math.min(window.screen.availHeight * 0.9, 900));
+      const width = Math.round(height * (9 / 16));
+      try {
+        window.resizeTo(width, height);
+      } catch {}
+    }
   </script>
 </body>
 </html>

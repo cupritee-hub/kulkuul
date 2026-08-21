@@ -18,6 +18,15 @@
           navigator.serviceWorker.register("./sw.js").catch(() => {});
         });
       }
+      // If this app is running as an installed standalone window (not a
+      // normal browser tab), size that window to a 3:4 ratio.
+      if (window.matchMedia("(display-mode: standalone)").matches && window.resizeTo) {
+        const height = Math.round(Math.min(window.screen.availHeight * 0.9, 900));
+        const width = Math.round(height * (3 / 4));
+        try {
+          window.resizeTo(width, height);
+        } catch {}
+      }
     </script>
 
           <style>
